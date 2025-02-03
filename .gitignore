@@ -5,8 +5,10 @@ app/lib/
 tmp
 .DS_Store
 .idea
-
+.lock
+bun.lock
 .vscode
+yarn.lock
 
 # Created by https://www.toptal.com/developers/gitignore/api/node,dotnetcore,csharp
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,dotnetcore,csharp
