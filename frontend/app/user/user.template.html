@@ -1,0 +1,31 @@
+<navbar></navbar>
+<div class="container mt-4" ng-controller="UsuarioController">
+  <h2>Cadastro de Usuário</h2>
+
+  <form ng-submit="cadastrar()">
+
+    <div class="form-group">
+      <label>Nome:</label>
+      <input type="text" class="form-control" ng-model="usuario.nome" required>
+    </div>
+
+    <div class="form-group">
+      <label>CPF:</label>
+      <input type="text" class="form-control" ng-model="usuario.cpf" required>
+    </div>
+
+    <div class="form-group">
+      <label>Endereço:</label>
+      <input type="text" class="form-control" ng-model="usuario.endereco">
+    </div>
+
+    <div class="form-group">
+      <label>Telefone:</label>
+      <input type="text" class="form-control" ng-model="usuario.telefone">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+  </form>
+
+  <div ng-if="mensagem" class="alert alert-info mt-3">{{ mensagem }}</div>
+</div>

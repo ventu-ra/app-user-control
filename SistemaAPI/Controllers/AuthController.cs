@@ -1,33 +1,33 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SistemaAPI.Models;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using System.Security.Cryptography;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using SistemaAPI.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using SistemaAPI.Services;
 
 namespace SistemaAPI.Controllers;
+
 [Route("api/[controller]")]
 [ApiController]
-public class LoginController : ControllerBase
+public class AuthController : ControllerBase
 {
   private readonly AppDbContext _context;
+  private readonly IConfiguration _configuration;
 
-  public LoginController(AppDbContext context)
+  public AuthController(AppDbContext context, IConfiguration configuration)
   {
     _context = context;
+    _configuration = configuration;
   }
 
   // Método para autenticar login
   [HttpPost]
-  public IActionResult Login([FromBody] Login login)
+  public async Task<IActionResult> Login([FromBody] Login login)
   {
-    var user = _context.Logins.FirstOrDefault(l => l.Usuario == login.Usuario);
+    var user = await _context.Logins.FirstOrDefaultAsync(l => l.Usuario == login.Usuario);
     if (user == null)
     {
       return Unauthorized(new { mensagem = "Usuário não encontrado." });
@@ -44,6 +44,26 @@ public class LoginController : ControllerBase
     // Geração do Token
     var token = GenerateJwtToken(user.Usuario);
     return Ok(new { token });
+  }
+
+  // Método para criar login
+  [HttpPost("Criar")]
+  public async Task<IActionResult> CriarLogin([FromBody] Login login)
+  {
+    var existingLogin = await _context.Logins.FirstOrDefaultAsync(l => l.Usuario == login.Usuario);
+
+    if (existingLogin != null)
+    {
+      return BadRequest(new { mensagem = "Este login já existe." });
+    }
+
+    var passwordHasher = new PasswordHasher<Login>();
+    login.Senha = passwordHasher.HashPassword(login, login.Senha); // Criptografa a senha
+
+    await _context.Logins.AddAsync(login);
+    await _context.SaveChangesAsync();
+
+    return Ok(new { mensagem = "Login criado com sucesso." });
   }
 
   private string GenerateJwtToken(string username)
@@ -67,22 +87,5 @@ public class LoginController : ControllerBase
     return new JwtSecurityTokenHandler().WriteToken(token);
   }
 
-  [HttpPost("CriarLogin")]
-  public IActionResult CriarLogin([FromBody] Login login)
-  {
-    var existingLogin = _context.Logins.FirstOrDefault(l => l.Usuario == login.Usuario);
 
-    if (existingLogin != null)
-    {
-      return BadRequest(new { mensagem = "Este login já existe." });
-    }
-
-    var passwordHasher = new PasswordHasher<Login>();
-    login.Senha = passwordHasher.HashPassword(login, login.Senha); // Criptografa a senha
-
-    _context.Logins.Add(login);
-    _context.SaveChanges();
-
-    return Ok(new { mensagem = "Login criado com sucesso." });
-  }
 }
