@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "http-server ./app -a localhost -p 3000 -c-1 "
+    "start": "concurrently \"npm run start-angular\" \"npm run start-dotnet\"",
+    "start-angular": "http-server ./app -a localhost -p 3000 -c-1 ",
+    "start-dotnet": "cd .. && cd SistemaAPI && dotnet watch run"
   },
   "keywords": [],
   "author": "",
@@ -11,5 +13,8 @@
   "dependencies": {
     "angular": "1.7.8",
     "http-server": "^14.1.1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   }
 }

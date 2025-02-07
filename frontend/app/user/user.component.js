@@ -26,15 +26,15 @@ userModule.controller("UsuarioController", function ($scope, $http) {
 
   // Função para listar os usuários
   $scope.listarUsuarios = function () {
-    var token = localStorage.getItem("jwtToken"); // Obtém o token do localStorage
+    var token = localStorage.getItem("jwtToken");
 
     $http.get("http://localhost:5198/api/Usuario/listar", {
       headers: {
-        "Authorization": "Bearer " + token // Adiciona o token no cabeçalho
+        "Authorization": "Bearer " + token
       }
     })
       .then(function (response) {
-        $scope.usuarios = response.data; // Armazena a lista de usuários
+        $scope.usuarios = response.data;
       })
       .catch(function (error) {
         console.error("Erro ao listar usuários:", error);
