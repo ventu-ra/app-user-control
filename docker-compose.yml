@@ -5,12 +5,13 @@ services:
       dockerfile: SistemaAPI/Dockerfile
     ports:
       - "5198:5198"
+    volumes:
+      - ./SistemaAPI:/SistemaAPI # Montando o diretório local da API
+      - ./SistemaAPI/Users.db:/app/Users.db # Persistindo o banco de dados SQLite
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
     networks:
       - app_network
-    volumes:
-      - ./SistemaAPI:/app
 
   frontend:
     build:

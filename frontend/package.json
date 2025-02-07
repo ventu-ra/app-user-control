@@ -5,7 +5,7 @@
   "scripts": {
     "start": "concurrently \"npm run start-angular\" \"npm run start-dotnet\"",
     "start-angular": "http-server ./app -a localhost -p 3000 -c-1 ",
-    "start-dotnet": "cd .. && cd SistemaAPI && dotnet watch run"
+    "start-dotnet": "cd ../SistemaAPI && dotnet watch run"
   },
   "keywords": [],
   "author": "",

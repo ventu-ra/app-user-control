@@ -10,6 +10,21 @@ bun.lock
 .vscode
 yarn.lock
 
+# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/modules.xml
+/projectSettingsUpdater.xml
+/.idea.SistemaAPI.iml
+/contentModel.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+.idea
+
 # Created by https://www.toptal.com/developers/gitignore/api/node,dotnetcore,csharp
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,dotnetcore,csharp
 

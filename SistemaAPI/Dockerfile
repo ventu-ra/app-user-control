@@ -1,21 +1,26 @@
-# Usa a imagem oficial do .NET SDK para compilar e publicar a API
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+# Estágio Base (para o ambiente de produção)
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER app
 WORKDIR /app
-
-# Copia os arquivos do projeto e restaura as dependências
-COPY SistemaAPI/*.csproj ./SistemaAPI/
-WORKDIR /app/SistemaAPI
-RUN dotnet restore
-
-# Copia o código-fonte e publica a aplicação
-COPY . .
-RUN dotnet publish -c Release -o /publish
-
-# Usa uma imagem mais leve para rodar a aplicação
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
-WORKDIR /app
-COPY --from=build /publish .
-
-# Expõe a porta onde a API rodará
 EXPOSE 5198
-CMD ["dotnet", "SistemaAPI.dll"]
+
+# Estágio de Build (para compilar e gerar o código)
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG BUILD_CONFIGURATION=Release
+WORKDIR /src
+COPY ["SistemaAPI/SistemaAPI.csproj", "SistemaAPI/"]
+RUN dotnet restore "./SistemaAPI/SistemaAPI.csproj"
+COPY . .
+WORKDIR "/src/SistemaAPI"
+RUN dotnet build "./SistemaAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
+
+# Estágio de Publicação (para gerar o código pronto para produção)
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./SistemaAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+
+# Estágio Final (para o ambiente de execução)
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "SistemaAPI.dll"]
