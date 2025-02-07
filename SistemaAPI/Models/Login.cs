@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SistemaAPI.Models;
 public class Login
 {
-  public int Id { get; set; }
-  public string Usuario { get; set; }
-  public string Senha { get; set; }
+  [Key]
+  public int? Id { get; set; }
+  public string? Username { get; set; }
+  public string? Password { get; set; }
 
-  public ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
 }

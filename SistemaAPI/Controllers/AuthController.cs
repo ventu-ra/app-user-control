@@ -1,91 +1,56 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using SistemaAPI.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using SistemaAPI.Services;
 
 namespace SistemaAPI.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/auth")]
 [ApiController]
 public class AuthController : ControllerBase
 {
-  private readonly AppDbContext _context;
-  private readonly IConfiguration _configuration;
+    private const string USERNAME = "SISTEMA";
+    private const string PASSWORD = "canditado123";
+    private const string SECRET_KEY = "minhasecretnotavisivelparatodos1234567890";
 
-  public AuthController(AppDbContext context, IConfiguration configuration)
-  {
-    _context = context;
-    _configuration = configuration;
-  }
-
-  // Método para autenticar login
-  [HttpPost]
-  public async Task<IActionResult> Login([FromBody] Login login)
-  {
-    var user = await _context.Logins.FirstOrDefaultAsync(l => l.Usuario == login.Usuario);
-    if (user == null)
+    [HttpPost("login")]
+    public IActionResult Login([FromBody] Login request)
     {
-      return Unauthorized(new { mensagem = "Usuário não encontrado." });
+        if (request.Username == USERNAME && request.Password == PASSWORD)
+        {
+            var token = GenerateJwtToken(request.Username);
+            return Ok(new { Token = token });
+        }
+        return Unauthorized(new { Message = "Usuário ou senha inválidos" });
     }
 
-    var passwordHasher = new PasswordHasher<Login>();
-    var result = passwordHasher.VerifyHashedPassword(user, user.Senha, login.Senha);
-
-    if (result == PasswordVerificationResult.Failed)
+    private string GenerateJwtToken(string username)
     {
-      return Unauthorized(new { mensagem = "Senha incorreta." });
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SECRET_KEY));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        var claims = new[]
+        {
+            new Claim(JwtRegisteredClaimNames.Sub, username),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
+
+        var token = new JwtSecurityToken(
+            issuer: "meusistema.com",
+            audience: "meusistema.com",
+            claims: claims,
+            expires: DateTime.UtcNow.AddHours(1),
+            signingCredentials: creds
+        );
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
-
-    // Geração do Token
-    var token = GenerateJwtToken(user.Usuario);
-    return Ok(new { token });
-  }
-
-  // Método para criar login
-  [HttpPost("Criar")]
-  public async Task<IActionResult> CriarLogin([FromBody] Login login)
-  {
-    var existingLogin = await _context.Logins.FirstOrDefaultAsync(l => l.Usuario == login.Usuario);
-
-    if (existingLogin != null)
+    
+    [HttpGet("test")]
+    public IActionResult Test()
     {
-      return BadRequest(new { mensagem = "Este login já existe." });
+        return Ok(new { message = "API funcionando!" });
     }
-
-    var passwordHasher = new PasswordHasher<Login>();
-    login.Senha = passwordHasher.HashPassword(login, login.Senha); // Criptografa a senha
-
-    await _context.Logins.AddAsync(login);
-    await _context.SaveChangesAsync();
-
-    return Ok(new { mensagem = "Login criado com sucesso." });
-  }
-
-  private string GenerateJwtToken(string username)
-  {
-    var claims = new[]
-    {
-      new Claim(JwtRegisteredClaimNames.Sub, username),
-      new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-    };
-
-    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("minhasecretnotavisivelparatodos1234567890"));
-    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-    var token = new JwtSecurityToken(
-      issuer: "sistema.com",
-      audience: "sistema.com",
-      claims: claims,
-      expires: DateTime.Now.AddMinutes(30),
-      signingCredentials: creds);
-
-    return new JwtSecurityTokenHandler().WriteToken(token);
-  }
-
-
 }
+

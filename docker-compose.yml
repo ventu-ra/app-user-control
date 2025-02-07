@@ -1,0 +1,30 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: SistemaAPI/Dockerfile
+    ports:
+      - "5198:5198"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    networks:
+      - app_network
+    volumes:
+      - ./SistemaAPI:/app
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - app_network
+    volumes:
+      - ./frontend:/app
+
+networks:
+  app_network:
+    driver: bridge

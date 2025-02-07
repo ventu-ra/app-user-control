@@ -1,22 +1,36 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+
 using Microsoft.EntityFrameworkCore;
 using SistemaAPI.Models;
-using SistemaAPI.Services;
-using Login = SistemaAPI.Models.Login;
-using Results = Microsoft.AspNetCore.Http.Results;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configurar o contexto do banco de dados SQLite
+
+// Adicionar configurações de banco de dados
+var connectionString = "Data Source=Users.db";
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
-);
+    options.UseSqlite(connectionString));
+
+
+
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddDistributedMemoryCache();
+
+// Configurar o CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins", policy =>
+    {
+        policy.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
 
 // Adicionar JWT no pipeline de autenticação
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -33,17 +47,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<JwtTokenService>();
-
 
 var app = builder.Build();
 
-// Usar autenticação e autorização
+// Usar o CORS
+app.UseCors(builder =>
+{
+    builder.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+});
+
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseHttpsRedirection();
+
 
 // Configurar o Swagger apenas para o ambiente de desenvolvimento
 if (app.Environment.IsDevelopment())
@@ -52,12 +70,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
-app.MapGet("/api/usuario", [Authorize] async (HttpContext context) =>
-{
-    return Results.Ok(new { mensagem = "Usuário autenticado" });
-});
-
-
+app.UseCors("AllowAllOrigins");
+app.MapControllers();
 app.Run();
