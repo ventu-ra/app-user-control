@@ -50,7 +50,7 @@ Ou, para rodar em segundo plano:
 docker compose up -d --build
 ```
 
-### ** Criar Um Adm no sistema**
+### **Criar Um Adm no sistema**
 
 ```sh
 curl -X 'POST' \
