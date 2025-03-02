@@ -1,0 +1,30 @@
+services:
+  backend:
+    build:
+      context: ./Sistema
+      dockerfile: Dockerfile
+    ports:
+      - "5130:5130"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      # - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection="Data Source=/app/SistemDb.db"
+    networks:
+      - app_network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - app_network
+    volumes:
+      - ./frontend:/app
+
+networks:
+  app_network:
+    driver: bridge

@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sistema.Exception", "Sistema.Exception\Sistema.Exception.csproj", "{C38E602B-379C-4E0C-BA91-39F3804FDD9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sistema.Communication", "Sistema.Communication\Sistema.Communication.csproj", "{8E8B2994-46BA-43AF-AB42-F109084998C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sistema.API", "Sistema.API\Sistema.API.csproj", "{2FBA82EE-ECFF-4C6C-B7AB-97FAA114DDB2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C38E602B-379C-4E0C-BA91-39F3804FDD9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C38E602B-379C-4E0C-BA91-39F3804FDD9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C38E602B-379C-4E0C-BA91-39F3804FDD9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C38E602B-379C-4E0C-BA91-39F3804FDD9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E8B2994-46BA-43AF-AB42-F109084998C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E8B2994-46BA-43AF-AB42-F109084998C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E8B2994-46BA-43AF-AB42-F109084998C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E8B2994-46BA-43AF-AB42-F109084998C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FBA82EE-ECFF-4C6C-B7AB-97FAA114DDB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FBA82EE-ECFF-4C6C-B7AB-97FAA114DDB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FBA82EE-ECFF-4C6C-B7AB-97FAA114DDB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FBA82EE-ECFF-4C6C-B7AB-97FAA114DDB2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
