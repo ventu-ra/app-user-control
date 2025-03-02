@@ -34,8 +34,7 @@ Este é um projeto que utiliza **.NET 8 (backend)** e **AngularJS 1.7.8 (fronten
 ### **1️⃣ Clonar o Repositório**
 
 ```sh
-git clone https://github.com/ventu-ra/angularjs-app
-
+git clone https://github.com/ventu-ra/angularjs-app && cd angularjs-app
 ```
 
 ### **2️⃣ Construir e Rodar os Containers**
