@@ -21,7 +21,7 @@ Este é um projeto que utiliza **.NET 8 (backend)** e **AngularJS 1.7.8 (fronten
 
 ```
 /
-├── SistemaAPI/       # Backend em .NET 8 (Web API)
+├── Backend/       # Backend em .NET 8 (Web API)
 ├── frontend/         # Frontend em AngularJS
 ├── docker-compose.yml # Arquivo de orquestração do Docker
 ├── README.md         # Documentação do projeto
