@@ -9,6 +9,7 @@ app.controller("BemVindoController", function ($scope, $window) {
 
   $scope.logout = function () {
     localStorage.removeItem("jwtToken");
+    localStorage.removeItem("User");
     $window.location.href = "#!/";
   };
 });
