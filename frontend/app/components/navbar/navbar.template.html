@@ -1,15 +1,47 @@
-<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-  <a class="navbar-brand" href="#!/app">Meu Sistema</a>
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+  <a class="navbar-brand" href="#!/app">
+    <h2 class="font-weight-bold">Sistema</h2>
+  </a>
   <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-    <ul class="navbar-nav flex-grow-1">
+    <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#!/app">Home</a>
+        <a class="nav-link" href="#!/app">
+          <span class="font-weight-bolder">
+            Home
+          </span>
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#!/cadastro" ng-if="$ctrl.isAuthenticated">Cadastro</a>
+        <a class="nav-link" href="#!/cadastro" ng-if="$ctrl.isAuthenticated">
+          <span class="font-weight-bolder ">
+            Cadastro
+          </span>
+        </a>
       </li>
-      <li class="nav-item" ng-if="$ctrl.token">
-        <button class="btn btn-danger" ng-click="$ctrl.logout()">Sair</button>
+      <!-- Nav Item - User Information -->
+      <li class="nav-item dropdown no-arrow">
+        <a class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          <span class="mr-3 d-none d-lg-inline text-gray-600  font-weight-normal"> {{$ctrl.user}} </span>
+          <img class="img-profile rounded-circle" src="libs/img/undraw_profile.svg">
+        </a>
+        <!-- Dropdown - User Information -->
+        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+
+          <a class="dropdown-item" href="#!/app">
+            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+            Profile
+          </a>
+          <a class="dropdown-item" href="#!/app">
+            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+            Settings
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" data-toggle="modal" ng-click="logout()">
+            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+            Logout
+          </a>
+        </div>
       </li>
     </ul>
   </div>

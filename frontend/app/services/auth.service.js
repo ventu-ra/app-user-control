@@ -3,6 +3,7 @@ angular.module("authModule", [])
     return {
       login: function (token) {
         $window.localStorage.setItem("jwtToken", token);
+        $window.localStorage.setItem("User", User);
       },
       logout: function () {
         $window.localStorage.removeItem("jwtToken");

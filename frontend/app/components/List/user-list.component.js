@@ -41,7 +41,6 @@ userModule.component("usuarioListComponent", {
       })
         .then(function (response) {
           vm.usuarios = response.data.users;
-
         })
         .catch(function (error) {
           console.error("Erro ao carregar usuários:", error);
