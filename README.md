@@ -1,6 +1,6 @@
 # Sistema
 
-Este é um projeto que utiliza **.NET 8 (backend)** e **AngularJS 1.7.8 (frontend)** para criar um sistema de login e cadastro de usuários. A aplicação está usando o **Docker** e e o **Docker Compose**.
+Este é um projeto que utiliza **.NET 8 (backend)** e **AngularJS 1.8.2 (frontend)** para criar um sistema de login e cadastro de usuários. A aplicação está usando o **Docker** e e o **Docker Compose**.
 
 ## 📌 Funcionalidades
 
@@ -12,7 +12,7 @@ Este é um projeto que utiliza **.NET 8 (backend)** e **AngularJS 1.7.8 (fronten
   - **Endereço** (opcional)
   - **Telefone** (opcional)
 - Backend em **.NET 8** usando **SQLite**
-- Frontend em **AngularJS 1.7.8** com **Bootstrap 5.1.3**
+- Frontend em **AngularJS 1.8.2** com **Bootstrap 5.1.3**
 - Containers do backend e frontend rodando na mesma **rede Docker**
 
 ---
