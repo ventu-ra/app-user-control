@@ -1,4 +1,4 @@
-# Desafio - Sistema de Cadastro de Usuários
+# Sistema
 
 Este é um projeto que utiliza **.NET 8 (backend)** e **AngularJS 1.7.8 (frontend)** para criar um sistema de login e cadastro de usuários. A aplicação está usando o **Docker** e e o **Docker Compose**.
 
