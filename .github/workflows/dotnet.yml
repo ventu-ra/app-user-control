@@ -28,4 +28,4 @@ jobs:
         run: dotnet build Backend/Sistema.API/Sistema.API.csproj --no-restore
 
       - name: Test Sistema.API
-        run: dotnet test Sistema/Sistema.API/Sistema.API.csproj --no-build --verbosity normal
+        run: dotnet test Backend/Sistema.API/Sistema.API.csproj --no-build --verbosity normal
