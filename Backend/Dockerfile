@@ -4,7 +4,7 @@
   FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
   WORKDIR /src
 
-  COPY ["Sistema.sln", "./"]
+  COPY ["Backend.sln", "./"]
   COPY ["Sistema.API/Sistema.API.csproj", "Sistema.API/"]
   COPY ["Sistema.Communication/Sistema.Communication.csproj", "Sistema.Communication/"]
   COPY ["Sistema.Exception/Sistema.Exception.csproj", "Sistema.Exception/"]

@@ -5,9 +5,9 @@ name: .NET
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
@@ -22,10 +22,10 @@ jobs:
           dotnet-version: 9.0.x
 
       - name: Restore dependencies for Sistema.API
-        run: dotnet restore Sistema/Sistema.API/Sistema.API.csproj
+        run: dotnet restore Backend/Sistema.API/Sistema.API.csproj
 
       - name: Build Sistema.API
-        run: dotnet build Sistema/Sistema.API/Sistema.API.csproj --no-restore
+        run: dotnet build Backend/Sistema.API/Sistema.API.csproj --no-restore
 
       - name: Test Sistema.API
         run: dotnet test Sistema/Sistema.API/Sistema.API.csproj --no-build --verbosity normal
