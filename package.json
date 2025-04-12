@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently \"npm run start-angular\" \"npm run start-dotnet\"",
-    "start-angular": "cd frontend && npm start",
+    "start-angular": "cd frontend && bun install && npm start",
     "start-dotnet": "dotnet watch run --project Backend/Sistema.API"
   },
   "repository": {

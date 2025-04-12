@@ -15,8 +15,8 @@ public class RegisterAuthUseCase
 {
   public ResponseRegisteredAuthJson Execute(RequestAuthJson request)
   {
-    
-   
+
+
     var dbContext = new AppDbContext();
     Validate(request, dbContext);
 
@@ -43,8 +43,8 @@ public class RegisterAuthUseCase
 
   private void Validate(RequestAuthJson request, AppDbContext dbContext)
   {
-    
-   
+
+
     var validator = new RegisterAuthValidator();
 
     var result = validator.Validate(request);
