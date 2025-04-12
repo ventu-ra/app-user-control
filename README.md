@@ -62,8 +62,6 @@ curl -X 'POST' \
 }'
 ```
 
-Isso iniciará:
-
 - **Backend**: Disponível em `http://localhost:5130`
 - **Frontend**: Disponível em `http://localhost:3000`
 
